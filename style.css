@@ -41,11 +41,7 @@
     --active-bg: #000000;
     --active-text: #ffffff;
 
-    /* Selection */
-    ::selection {
-        background-color: var(--text-primary);
-        color: var(--bg-color);
-    }
+
 }
 
 /* Selection */
@@ -53,7 +49,7 @@
     background-color: var(--text-primary);
     color: var(--bg-color);
 }
-}
+
 
 /* Reset & Base */
 *,
@@ -151,6 +147,7 @@ a:hover {
 /* Article List */
 .article-list {
     list-style: none;
+    padding-left: var(--space-md);
 }
 
 .article-item {
@@ -240,6 +237,21 @@ a:hover {
 /* Hidden Data */
 .hidden-notes {
     display: none;
+}
+
+/* Home Icon */
+.home-icon {
+    /* Removed fixed positioning */
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-icon:hover {
+    color: var(--text-primary);
+    opacity: 1;
 }
 
 /* Mobile Responsiveness */
