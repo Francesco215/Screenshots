@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Francesco Sacco - Blog</title>
+    <title>Screenshot blog</title>
     <meta name="description"
         content="A minimalist blog by Francesco Sacco. Thoughts on life, curiosity, and technology.">
     <meta name="author" content="Francesco Sacco">
@@ -42,7 +42,7 @@
         <!-- Sidebar / List View -->
         <aside id="sidebar" class="sidebar">
             <div class="sidebar-header" style="display: flex; justify-content: space-between; align-items: center;">
-                <div class="site-title">Francesco Sacco</div>
+                <div class="site-title">Screenshot blog</div>
                 <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">Dark</button>
             </div>
             <nav class="sidebar-content">
@@ -55,16 +55,6 @@
         <!-- Main Content / Detail View -->
         <main id="main-content" class="main-content">
             <div class="content-wrapper">
-
-                <!-- Navigation Controls -->
-                <div id="nav-controls" class="nav-controls" style="display: none;">
-                    <button id="btn-back" class="nav-btn btn-back-mobile">← Back</button>
-                    <div class="nav-pagination">
-                        <button id="btn-prev" class="nav-btn">Previous</button>
-                        <span style="margin: 0 10px; color: var(--border-color);">/</span>
-                        <button id="btn-next" class="nav-btn">Next</button>
-                    </div>
-                </div>
 
                 <!-- Article Content -->
                 <article id="note-content-display" class="note-content">
@@ -241,10 +231,6 @@
             const sidebar = document.getElementById('sidebar');
             const mainContent = document.getElementById('main-content');
             const noteContentDisplay = document.getElementById('note-content-display');
-            const navControls = document.getElementById('nav-controls');
-            const btnBack = document.getElementById('btn-back');
-            const btnPrev = document.getElementById('btn-prev');
-            const btnNext = document.getElementById('btn-next');
             const themeToggle = document.getElementById('theme-toggle');
 
             let notes = [];
@@ -273,14 +259,6 @@
 
             initTheme();
 
-            // Reading Time Logic
-            function calculateReadingTime(text) {
-                const wordsPerMinute = 200;
-                const words = text.trim().split(/\s+/).length;
-                const minutes = Math.ceil(words / wordsPerMinute);
-                return `${minutes} min read`;
-            }
-
             // Parse notes
             notesData.forEach((note, index) => {
                 const titleEl = note.querySelector('.note-title');
@@ -289,7 +267,6 @@
                 // Handle both h1 and p for titles (legacy support)
                 const title = titleEl ? titleEl.textContent : 'Untitled';
                 const content = textEl ? textEl.innerHTML : '';
-                const textContent = textEl ? textEl.textContent : '';
 
                 // Create a slug for deep linking
                 const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
@@ -298,8 +275,7 @@
                     id: index,
                     slug: slug,
                     title: title,
-                    content: content,
-                    readingTime: calculateReadingTime(textContent)
+                    content: content
                 });
             });
 
@@ -351,16 +327,8 @@
                 // Build content with title and text
                 noteContentDisplay.innerHTML = `
             <h1>${note.title}</h1>
-            <div class="reading-time">${note.readingTime}</div>
             ${note.content}
         `;
-
-                // Show controls
-                navControls.style.display = 'flex';
-
-                // Update buttons
-                btnPrev.disabled = index === 0;
-                btnNext.disabled = index === notes.length - 1;
 
                 // Mobile Logic: Slide in main content
                 if (window.innerWidth <= 768) {
@@ -372,7 +340,7 @@
                 mainContent.scrollTop = 0;
 
                 // Update Page Title
-                document.title = `${note.title} - Francesco Sacco`;
+                document.title = `${note.title} - Screenshot blog`;
             }
 
             // Handle Hash Change (Deep Linking)
@@ -387,7 +355,7 @@
                     // Deselect all
                     document.querySelectorAll('.article-link').forEach(el => el.classList.remove('active'));
                     currentIndex = -1;
-                    document.title = 'Francesco Sacco - Blog';
+                    document.title = 'Screenshot blog';
                     return;
                 }
 
@@ -406,20 +374,6 @@
 
             // Event Listeners
             window.addEventListener('hashchange', handleHashChange);
-
-            btnBack.addEventListener('click', () => {
-                // Clear hash to return to list
-                history.pushState("", document.title, window.location.pathname + window.location.search);
-                handleHashChange(); // Manually trigger since pushState doesn't fire hashchange
-            });
-
-            btnPrev.addEventListener('click', () => {
-                navigateTo(currentIndex - 1);
-            });
-
-            btnNext.addEventListener('click', () => {
-                navigateTo(currentIndex + 1);
-            });
 
             // Keyboard Navigation
             document.addEventListener('keydown', (e) => {

@@ -36,6 +36,10 @@
     --sidebar-width: 350px;
     --max-content-width: 680px;
 
+    /* Active State */
+    --active-bg: #000000;
+    --active-text: #ffffff;
+
     /* Selection */
     ::selection {
         background-color: var(--text-primary);
@@ -46,10 +50,13 @@
 /* Dark Mode */
 body.dark-mode {
     --bg-color: #111111;
-    --text-primary: #ffffff;
-    --text-secondary: #a0a0a0;
+    --text-primary: #e5e5e5;
+    /* Slightly softened white */
+    --text-secondary: #a3a3a3;
     --border-color: #333333;
     --hover-bg: #222222;
+    --active-bg: #ffffff;
+    --active-text: #000000;
 }
 
 /* Reset & Base */
@@ -163,8 +170,8 @@ a:hover {
 }
 
 .article-link.active {
-    background-color: #000;
-    color: #fff;
+    background-color: var(--active-bg);
+    color: var(--active-text);
 }
 
 /* Main Content Area */
@@ -182,37 +189,6 @@ a:hover {
     max-width: var(--max-content-width);
     padding: var(--space-xl) var(--space-md);
     margin: 0 auto;
-}
-
-/* Navigation Controls (Detail View) */
-.nav-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--space-lg);
-    padding-bottom: var(--space-sm);
-    border-bottom: 1px solid var(--border-color);
-    font-family: var(--font-sans);
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.nav-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: 600;
-    color: var(--text-primary);
-    padding: var(--space-xs) 0;
-    text-transform: uppercase;
-}
-
-.nav-btn:disabled {
-    opacity: 0.2;
-    cursor: default;
 }
 
 /* Note Content */
@@ -246,7 +222,8 @@ a:hover {
     font-size: 1.25rem;
     line-height: 1.8;
     margin-bottom: var(--space-md);
-    color: #333;
+    color: var(--text-primary);
+    /* Fixed: Was hardcoded #333 */
 }
 
 .note-content p:last-child {
@@ -324,16 +301,6 @@ a:hover {
 
 .theme-toggle:hover {
     color: var(--text-primary);
-}
-
-/* Reading Time */
-.reading-time {
-    font-family: var(--font-sans);
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    margin-bottom: var(--space-md);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
 }
 
 /* Print Styles */
