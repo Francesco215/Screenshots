@@ -2,342 +2,458 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Francesco Sacco - Blog</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    /* Local styles for the blog logic */
-    #blog-detail {
-      display: none;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Francesco Sacco - Blog</title>
+    <meta name="description"
+        content="A minimalist blog by Francesco Sacco. Thoughts on life, curiosity, and technology.">
+    <meta name="author" content="Francesco Sacco">
 
-    .hidden-notes {
-      display: none;
-    }
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://francescosacco.com/">
+    <meta property="og:title" content="Francesco Sacco - Blog">
+    <meta property="og:description"
+        content="A minimalist blog by Francesco Sacco. Thoughts on life, curiosity, and technology.">
+    <meta property="og:image" content="https://francescosacco.com/og-image.jpg">
 
-    .nav-controls {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 2rem;
-      font-family: inherit;
-    }
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://francescosacco.com/">
+    <meta property="twitter:title" content="Francesco Sacco - Blog">
+    <meta property="twitter:description"
+        content="A minimalist blog by Francesco Sacco. Thoughts on life, curiosity, and technology.">
+    <meta property="twitter:image" content="https://francescosacco.com/og-image.jpg">
 
-    .nav-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 1rem;
-      color: #525252;
-      text-decoration: underline;
-      padding: 0;
-    }
+    <link rel="stylesheet" href="style.css">
 
-    .nav-btn:hover {
-      color: #171717;
-    }
-
-    .nav-btn:disabled {
-      color: #d4d4d4;
-      cursor: default;
-      text-decoration: none;
-    }
-
-    /* Ensure note content inherits site typography */
-    .note-content h1 {
-      font-size: 2.25rem;
-      line-height: 2.5rem;
-      font-weight: 400;
-      letter-spacing: -0.025em;
-      margin-bottom: 1.5rem;
-      margin-top: 0;
-    }
-
-    .note-content p {
-      font-size: 1.125rem;
-      line-height: 1.625;
-      color: #404040;
-      margin-bottom: 1.5rem;
-    }
-
-    @media (min-width: 768px) {
-      .note-content p {
-        font-size: 1.25rem;
-      }
-    }
-  </style>
+    <!-- Google Fonts: Inter (Sans) and Lora (Serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
 
-  <div class="container">
+    <div class="app-container">
 
+        <!-- Sidebar / List View -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="site-title">Francesco Sacco</div>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">Dark</button>
+            </div>
+            <nav class="sidebar-content">
+                <ul id="blog-list" class="article-list">
+                    <!-- Javascript will populate this -->
+                </ul>
+            </nav>
+        </aside>
 
-    <main>
-      <h1 class="page-title">Screenshot Blog</h1>
-      <hr class="divider">
+        <!-- Main Content / Detail View -->
+        <main id="main-content" class="main-content">
+            <div class="content-wrapper">
 
-      <!-- List View -->
-      <div id="blog-list" class="article-list">
-        <!-- Javascript will populate this -->
-      </div>
+                <!-- Navigation Controls -->
+                <div id="nav-controls" class="nav-controls" style="display: none;">
+                    <button id="btn-back" class="nav-btn btn-back-mobile">← Back</button>
+                    <div class="nav-pagination">
+                        <button id="btn-prev" class="nav-btn">Previous</button>
+                        <span style="margin: 0 10px; color: var(--border-color);">/</span>
+                        <button id="btn-next" class="nav-btn">Next</button>
+                    </div>
+                </div>
 
-      <!-- Detail View -->
-      <div id="blog-detail">
-        <div class="nav-controls">
-          <button id="btn-back" class="nav-btn">← Back</button>
-          <div>
-            <button id="btn-prev" class="nav-btn">Previous</button>
-            <span style="margin: 0 10px; color: #e5e5e5;">|</span>
-            <button id="btn-next" class="nav-btn">Next</button>
-          </div>
-        </div>
-        <div id="note-content-display" class="note-content">
-          <!-- Content goes here -->
-        </div>
-      </div>
-    </main>
+                <!-- Article Content -->
+                <article id="note-content-display" class="note-content">
+                    <!-- Content goes here -->
+                    <div style="text-align: center; margin-top: 20vh; color: var(--text-secondary);">
+                        <p>Select an article from the list.</p>
+                    </div>
+                </article>
+
+            </div>
+        </main>
+
+    </div>
 
     <!-- Hidden Data Source -->
     <div id="notes-data" class="hidden-notes">
-      <div class="note-container">
-        <p class="note-title">What is this?</p>
-        <div class="note-text">
-          <p>I never liked writing, but it’s important, so I have to practice.</p>
-          <p>I gave myself some constraints:<br>
-            - Each note has to fit in a screenshot from my phone<br>
-            - No links allowed<br>
-            - No equations allowed<br>
-            - No help from AI<br>
-            - No help from Googling</p>
-          <p>I have to say that writing like this is quite fun.</p>
-          <p>Buona Lettura</p>
+        <div class="note-container">
+            <p class="note-title">What is this?</p>
+            <div class="note-text">
+                <p>I never liked writing, but it’s important, so I have to practice.</p>
+                <p>I gave myself some constraints:<br>
+                    - Each note has to fit in a screenshot from my phone<br>
+                    - No links allowed<br>
+                    - No equations allowed<br>
+                    - No help from AI<br>
+                    - No help from Googling</p>
+                <p>I have to say that writing like this is quite fun.</p>
+                <p>Buona Lettura</p>
+            </div>
         </div>
-      </div>
-      <div class="note-container">
-        <p class="note-title">Life</p>
-        <div class="note-text">
-          <p>The Earth is in the middle of two thermal reservoirs: The Sun and deep space.<br>
-            If two thermal reservoirs are available it becomes possible to extract energy.</p>
-          <p>Once you have this energy you can use it in a multitude of ways</p>
-          <p>- Store it for later<br>
-            - Create more copies of yourself<br>
-            - Increase the amount of energy you can extract in the future</p>
-          <p>You can try to get more creative, but most of the other options are variations or combinations of the ones
-            above</p>
-          <p>Any heat engine that does any of the above is a life form</p>
-          <p>Since the extractable energy is not infinite it is inevitable to enter a competition between the various
-            life forms. That competition is evolution</p>
+        <div class="note-container">
+            <p class="note-title">Life</p>
+            <div class="note-text">
+                <p>The Earth is in the middle of two thermal reservoirs: The Sun and deep space.<br>
+                    If two thermal reservoirs are available it becomes possible to extract energy.</p>
+                <p>Once you have this energy you can use it in a multitude of ways</p>
+                <p>- Store it for later<br>
+                    - Create more copies of yourself<br>
+                    - Increase the amount of energy you can extract in the future</p>
+                <p>You can try to get more creative, but most of the other options are variations or combinations of the
+                    ones
+                    above</p>
+                <p>Any heat engine that does any of the above is a life form</p>
+                <p>Since the extractable energy is not infinite it is inevitable to enter a competition between the
+                    various
+                    life forms. That competition is evolution</p>
+            </div>
         </div>
-      </div>
 
-      <div class="note-container">
-        <p class="note-title">The importance of Curiosity</p>
-        <div class="note-text">
-          <p>Every emotion has a function</p>
-          <p>- Love is for reproduction<br>
-            - Fear is for avoiding risks<br>
-            - Curiosity is for learning</p>
-          <p>Like every other emotion, they exist because they are useful for survival, and as such they are just
-            emergent behaviours</p>
-          <p>I believe engineering emergent behaviours in AI is a waste of time, but curiosity is special— Curiosity is
-            what makes us curate our own dataset</p>
-          <p>The whole field of dataset curation will be irrelevant once a good model for curiosity arises</p>
-          <p>The free energy principle promises to model curiosity starting from bayesian mechanics, but I haven’t found
-            a good explanations or convincing experiments</p>
+        <div class="note-container">
+            <p class="note-title">The importance of Curiosity</p>
+            <div class="note-text">
+                <p>Every emotion has a function</p>
+                <p>- Love is for reproduction<br>
+                    - Fear is for avoiding risks<br>
+                    - Curiosity is for learning</p>
+                <p>Like every other emotion, they exist because they are useful for survival, and as such they are just
+                    emergent behaviours</p>
+                <p>I believe engineering emergent behaviours in AI is a waste of time, but curiosity is special—
+                    Curiosity is
+                    what makes us curate our own dataset</p>
+                <p>The whole field of dataset curation will be irrelevant once a good model for curiosity arises</p>
+                <p>The free energy principle promises to model curiosity starting from bayesian mechanics, but I haven’t
+                    found
+                    a good explanations or convincing experiments</p>
+            </div>
         </div>
-      </div>
 
-      <div class="note-container">
-        <h1 class="note-title">Don't let your reward model be hijacked</h1>
-        <div class="note-text">
-          <p>You don’t control your reward circuitry. That’s by design</p>
-          <p>If you had a button that can activate your reward circuitry you would spam it until you die</p>
-          <p>This actually happened in real life:<br>
-            In the 80s doctors implanted an electrode in a patient’s brain capable of stimulating her thalamus.<br>
-            The woman could control it with a device and the results where devastating</p>
-          <p>Addictive drugs are like that button. That’s why they are bad</p>
-          <p>In general whatever controls your reward model, controls you. Choose what controls you wisely</p>
+        <div class="note-container">
+            <h1 class="note-title">Don't let your reward model be hijacked</h1>
+            <div class="note-text">
+                <p>You don’t control your reward circuitry. That’s by design</p>
+                <p>If you had a button that can activate your reward circuitry you would spam it until you die</p>
+                <p>This actually happened in real life:<br>
+                    In the 80s doctors implanted an electrode in a patient’s brain capable of stimulating her
+                    thalamus.<br>
+                    The woman could control it with a device and the results where devastating</p>
+                <p>Addictive drugs are like that button. That’s why they are bad</p>
+                <p>In general whatever controls your reward model, controls you. Choose what controls you wisely</p>
+            </div>
         </div>
-      </div>
 
-      <div class="note-container">
-        <h1 class="note-title">Paradise</h1>
-        <div class="note-text">
-          <p>It is supposed to be the most amazing world there can ever be.</p>
-          <p>We humans design virtual worlds, and they are called video games. They don’t look at all like the
-            stereotypical type of world you associate with concept of paradise— That’s because jumping aimlessly in the
-            clouds is boring</p>
-          <p>We humans want challenges, and a perfect world doesn’t have any.<br>
-            Artificial super intelligence can turn our world into a paradise: pointless and boring</p>
-          <p>Lately I’ve been playing less video games because the real world is more fun.</p>
-          <p><br>…<br>Is our world actually a paradise in disguise?</p>
+        <div class="note-container">
+            <h1 class="note-title">Paradise</h1>
+            <div class="note-text">
+                <p>It is supposed to be the most amazing world there can ever be.</p>
+                <p>We humans design virtual worlds, and they are called video games. They don’t look at all like the
+                    stereotypical type of world you associate with concept of paradise— That’s because jumping aimlessly
+                    in the
+                    clouds is boring</p>
+                <p>We humans want challenges, and a perfect world doesn’t have any.<br>
+                    Artificial super intelligence can turn our world into a paradise: pointless and boring</p>
+                <p>Lately I’ve been playing less video games because the real world is more fun.</p>
+                <p><br>…<br>Is our world actually a paradise in disguise?</p>
+            </div>
         </div>
-      </div>
 
-      <div class="note-container">
-        <h1 class="note-title">Minecraft</h1>
-        <div class="note-text">
-          <p>Every Minecraft player subconsciously knows what is the meaning of life</p>
-          <p>In most games you are given a mission— that’s the meaning of your life inside of that video game</p>
-          <p>But Minecraft is different, you are given a world and its laws of physics: its game mechanics. Sounds
-            familiar?</p>
-          <p>Every game of Minecraft has no “real” meaning. Despite this, Minecraft is the most played video game of all
-            time, and it’s no coincidence.</p>
-          <p>Usually the developers take on the task of choosing the game’s mission. Notch *the creator of Minecraft*
-            has delegated the role of choosing that to you.</p>
-          <p>If the meaning of life is given externally, it’s just restriction— But if it comes from within you, then
-            it’s freedom.</p>
+        <div class="note-container">
+            <h1 class="note-title">Minecraft</h1>
+            <div class="note-text">
+                <p>Every Minecraft player subconsciously knows what is the meaning of life</p>
+                <p>In most games you are given a mission— that’s the meaning of your life inside of that video game</p>
+                <p>But Minecraft is different, you are given a world and its laws of physics: its game mechanics. Sounds
+                    familiar?</p>
+                <p>Every game of Minecraft has no “real” meaning. Despite this, Minecraft is the most played video game
+                    of all
+                    time, and it’s no coincidence.</p>
+                <p>Usually the developers take on the task of choosing the game’s mission. Notch *the creator of
+                    Minecraft*
+                    has delegated the role of choosing that to you.</p>
+                <p>If the meaning of life is given externally, it’s just restriction— But if it comes from within you,
+                    then
+                    it’s freedom.</p>
+            </div>
         </div>
-      </div>
 
-      <div class="note-container">
-        <h1 class="note-title">Grand Theft Auto</h1>
-        <div class="note-text">
-          <p>In GTA you are a criminal and you earn money doing crimes— It’s very formative I must say.</p>
-          <p>But being a criminal is no easy task, it’s a lot of work— Fortunately in GTA there are cheat codes</p>
-          <p>When I first discovered that, It was amazing! I would fly around with helicopters and I wouldn’t even need
-            to land them properly— If it crashes I can take a new one</p>
-          <p>But within in a few days, what was once a fun game, became pointless and boring. Why even play if I already
-            have everything?</p>
-          <p>So I started a new campaign— I went back to being poor, and I fell in love with the game again.</p>
-          <p>In real life it’s the same: I much prefer my life over the life of a billionaire’s son.<br>
-            That’s because I have an objective to strive for— It’s very formative I must say.</p>
+        <div class="note-container">
+            <h1 class="note-title">Grand Theft Auto</h1>
+            <div class="note-text">
+                <p>In GTA you are a criminal and you earn money doing crimes— It’s very formative I must say.</p>
+                <p>But being a criminal is no easy task, it’s a lot of work— Fortunately in GTA there are cheat codes
+                </p>
+                <p>When I first discovered that, It was amazing! I would fly around with helicopters and I wouldn’t even
+                    need
+                    to land them properly— If it crashes I can take a new one</p>
+                <p>But within in a few days, what was once a fun game, became pointless and boring. Why even play if I
+                    already
+                    have everything?</p>
+                <p>So I started a new campaign— I went back to being poor, and I fell in love with the game again.</p>
+                <p>In real life it’s the same: I much prefer my life over the life of a billionaire’s son.<br>
+                    That’s because I have an objective to strive for— It’s very formative I must say.</p>
+            </div>
         </div>
-      </div>
 
-      <div class="note-container">
-        <h1 class="note-title">Recursive definitions</h1>
-        <div class="note-text">
-          <p>Every word in the vocabulary is defined in terms of other words. Isn’t this strange?</p>
-          <p>Some words indicate things in the real world, so that solves the paradox, but some words are peculiar…</p>
-          <p>Take the world “Existence”: It can only be defined in terms of itself (try it).</p>
-          <p>This subtle fact explains why some questions are wierdly un-answerable:<br>
-            - Why do I exist?<br>
-            - What is existence?<br>
-            - Why does the universe exist?</p>
-          <p>All of these questions can be translated into:</p>
-          <p>Why does *this thing that exists* exist?</p>
-          <p>And since the definition of existence is recursive the question is recursive and the answer is recursive.
-            People that don’t understand recursion get stuck in an infinite loop.</p>
+        <div class="note-container">
+            <h1 class="note-title">Recursive definitions</h1>
+            <div class="note-text">
+                <p>Every word in the vocabulary is defined in terms of other words. Isn’t this strange?</p>
+                <p>Some words indicate things in the real world, so that solves the paradox, but some words are
+                    peculiar…</p>
+                <p>Take the world “Existence”: It can only be defined in terms of itself (try it).</p>
+                <p>This subtle fact explains why some questions are wierdly un-answerable:<br>
+                    - Why do I exist?<br>
+                    - What is existence?<br>
+                    - Why does the universe exist?</p>
+                <p>All of these questions can be translated into:</p>
+                <p>Why does *this thing that exists* exist?</p>
+                <p>And since the definition of existence is recursive the question is recursive and the answer is
+                    recursive.
+                    People that don’t understand recursion get stuck in an infinite loop.</p>
+            </div>
         </div>
-      </div>
-      <div class="note-container">
-        <h1 class="note-title">Competition creates cancer</h1>
-        <div class="note-text">
-          <p>In any self-organising system with limited resources each sub-element competes to get them</p>
-          <p>- In human societies companies compete for resources<br>
-            - In ecosystems life forms compete for resources<br>
-            - In multicellular organism cells compete for resources</p>
-          <p>In multicellular organisms some cells are better than others at gaining resources and multiply</p>
-          <p>Sometimes the immune system kills them, but the best ones survive and develop over time resistance and
-            speed</p>
-          <p>If they are too good they grow so much to ultimately kill the host and themselves in the process</p>
-          <p>Ironically, they are so good at playing the game that they end up loosing</p>
+        <div class="note-container">
+            <h1 class="note-title">Competition creates cancer</h1>
+            <div class="note-text">
+                <p>In any self-organising system with limited resources each sub-element competes to get them</p>
+                <p>- In human societies companies compete for resources<br>
+                    - In ecosystems life forms compete for resources<br>
+                    - In multicellular organism cells compete for resources</p>
+                <p>In multicellular organisms some cells are better than others at gaining resources and multiply</p>
+                <p>Sometimes the immune system kills them, but the best ones survive and develop over time resistance
+                    and
+                    speed</p>
+                <p>If they are too good they grow so much to ultimately kill the host and themselves in the process</p>
+                <p>Ironically, they are so good at playing the game that they end up loosing</p>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const notesData = document.querySelectorAll('#notes-data .note-container');
-      const blogList = document.getElementById('blog-list');
-      const blogDetail = document.getElementById('blog-detail');
-      const noteContentDisplay = document.getElementById('note-content-display');
-      const btnBack = document.getElementById('btn-back');
-      const btnPrev = document.getElementById('btn-prev');
-      const btnNext = document.getElementById('btn-next');
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const notesData = document.querySelectorAll('#notes-data .note-container');
+            const blogList = document.getElementById('blog-list');
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+            const noteContentDisplay = document.getElementById('note-content-display');
+            const navControls = document.getElementById('nav-controls');
+            const btnBack = document.getElementById('btn-back');
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+            const themeToggle = document.getElementById('theme-toggle');
 
-      let notes = [];
-      let currentIndex = -1;
+            let notes = [];
+            let currentIndex = -1;
 
-      // Parse notes
-      notesData.forEach((note, index) => {
-        const titleEl = note.querySelector('.note-title');
-        const textEl = note.querySelector('.note-text');
+            // Dark Mode Logic
+            function initTheme() {
+                const savedTheme = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-        // Handle both h1 and p for titles (legacy support)
-        const title = titleEl ? titleEl.textContent : 'Untitled';
-        const content = textEl ? textEl.innerHTML : '';
+                if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                    document.body.classList.add('dark-mode');
+                    themeToggle.textContent = 'Light';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    themeToggle.textContent = 'Dark';
+                }
+            }
 
-        notes.push({
-          id: index,
-          title: title,
-          content: content
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                const isDark = document.body.classList.contains('dark-mode');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                themeToggle.textContent = isDark ? 'Light' : 'Dark';
+            });
+
+            initTheme();
+
+            // Reading Time Logic
+            function calculateReadingTime(text) {
+                const wordsPerMinute = 200;
+                const words = text.trim().split(/\s+/).length;
+                const minutes = Math.ceil(words / wordsPerMinute);
+                return `${minutes} min read`;
+            }
+
+            // Parse notes
+            notesData.forEach((note, index) => {
+                const titleEl = note.querySelector('.note-title');
+                const textEl = note.querySelector('.note-text');
+
+                // Handle both h1 and p for titles (legacy support)
+                const title = titleEl ? titleEl.textContent : 'Untitled';
+                const content = textEl ? textEl.innerHTML : '';
+                const textContent = textEl ? textEl.textContent : '';
+
+                // Create a slug for deep linking
+                const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+
+                notes.push({
+                    id: index,
+                    slug: slug,
+                    title: title,
+                    content: content,
+                    readingTime: calculateReadingTime(textContent)
+                });
+            });
+
+            // Render List
+            function renderList() {
+                blogList.innerHTML = '';
+                notes.forEach((note, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'article-item';
+
+                    const a = document.createElement('a');
+                    a.className = 'article-link';
+                    a.textContent = note.title;
+                    a.href = `#${note.slug}`; // Use hash for link
+                    a.dataset.index = index;
+
+                    a.addEventListener('click', (e) => {
+                        // Let default behavior happen to update URL hash
+                        // We listen to hashchange event instead
+                        if (window.innerWidth <= 768) {
+                            // On mobile, we might want to manually trigger UI update if hash doesn't change (e.g. clicking same link)
+                            // But hashchange handles most cases.
+                        }
+                    });
+
+                    li.appendChild(a);
+                    blogList.appendChild(li);
+                });
+            }
+
+            // Show Note
+            function showNote(index) {
+                if (index < 0 || index >= notes.length) return;
+
+                currentIndex = index;
+                const note = notes[index];
+
+                // Update active state in list
+                document.querySelectorAll('.article-link').forEach((el, i) => {
+                    if (i === index) {
+                        el.classList.add('active');
+                        // Scroll list item into view if needed
+                        el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    } else {
+                        el.classList.remove('active');
+                    }
+                });
+
+                // Build content with title and text
+                noteContentDisplay.innerHTML = `
+            <h1>${note.title}</h1>
+            <div class="reading-time">${note.readingTime}</div>
+            ${note.content}
+        `;
+
+                // Show controls
+                navControls.style.display = 'flex';
+
+                // Update buttons
+                btnPrev.disabled = index === 0;
+                btnNext.disabled = index === notes.length - 1;
+
+                // Mobile Logic: Slide in main content
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.add('hidden');
+                    mainContent.classList.add('visible');
+                }
+
+                // Scroll to top of content
+                mainContent.scrollTop = 0;
+
+                // Update Page Title
+                document.title = `${note.title} - Francesco Sacco`;
+            }
+
+            // Handle Hash Change (Deep Linking)
+            function handleHashChange() {
+                const hash = window.location.hash.slice(1); // Remove '#'
+                if (!hash) {
+                    // If no hash, show list view (on mobile) or reset (on desktop)
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.remove('hidden');
+                        mainContent.classList.remove('visible');
+                    }
+                    // Deselect all
+                    document.querySelectorAll('.article-link').forEach(el => el.classList.remove('active'));
+                    currentIndex = -1;
+                    document.title = 'Francesco Sacco - Blog';
+                    return;
+                }
+
+                const noteIndex = notes.findIndex(n => n.slug === hash);
+                if (noteIndex !== -1) {
+                    showNote(noteIndex);
+                }
+            }
+
+            // Navigate to Note (Updates Hash)
+            function navigateTo(index) {
+                if (index >= 0 && index < notes.length) {
+                    window.location.hash = notes[index].slug;
+                }
+            }
+
+            // Event Listeners
+            window.addEventListener('hashchange', handleHashChange);
+
+            btnBack.addEventListener('click', () => {
+                // Clear hash to return to list
+                history.pushState("", document.title, window.location.pathname + window.location.search);
+                handleHashChange(); // Manually trigger since pushState doesn't fire hashchange
+            });
+
+            btnPrev.addEventListener('click', () => {
+                navigateTo(currentIndex - 1);
+            });
+
+            btnNext.addEventListener('click', () => {
+                navigateTo(currentIndex + 1);
+            });
+
+            // Keyboard Navigation
+            document.addEventListener('keydown', (e) => {
+                // If sidebar is focused or we are just browsing
+                if (e.key === 'ArrowDown' || e.key === 'j') {
+                    if (currentIndex < notes.length - 1) {
+                        navigateTo(currentIndex + 1);
+                    } else if (currentIndex === -1 && notes.length > 0) {
+                        navigateTo(0);
+                    }
+                } else if (e.key === 'ArrowUp' || e.key === 'k') {
+                    if (currentIndex > 0) {
+                        navigateTo(currentIndex - 1);
+                    }
+                } else if (e.key === 'ArrowRight') {
+                    if (currentIndex < notes.length - 1) navigateTo(currentIndex + 1);
+                } else if (e.key === 'ArrowLeft') {
+                    if (currentIndex > 0) navigateTo(currentIndex - 1);
+                } else if (e.key === 'Escape') {
+                    // Go back to list
+                    history.pushState("", document.title, window.location.pathname + window.location.search);
+                    handleHashChange();
+                }
+            });
+
+            // Initial Render
+            renderList();
+
+            // Check initial hash
+            if (window.location.hash) {
+                handleHashChange();
+            }
         });
-      });
-
-      // Render List
-      function renderList() {
-        blogList.innerHTML = '';
-        notes.forEach((note, index) => {
-          const article = document.createElement('article');
-          const h2 = document.createElement('h2');
-          h2.className = 'article-title';
-
-          const a = document.createElement('a');
-          a.href = '#';
-          a.className = 'article-link';
-          a.textContent = note.title;
-          a.onclick = (e) => {
-            e.preventDefault();
-            showNote(index);
-          };
-
-          h2.appendChild(a);
-          article.appendChild(h2);
-          blogList.appendChild(article);
-        });
-
-        blogList.style.display = 'flex';
-        blogDetail.style.display = 'none';
-        window.scrollTo(0, 0);
-      }
-
-      // Show Note
-      function showNote(index) {
-        if (index < 0 || index >= notes.length) return;
-
-        currentIndex = index;
-        const note = notes[index];
-
-        // Build content with title and text
-        noteContentDisplay.innerHTML = `
-                    <h1 class="page-title">${note.title}</h1>
-                    ${note.content}
-                `;
-
-        // Update buttons
-        btnPrev.disabled = index === 0;
-        btnNext.disabled = index === notes.length - 1;
-
-        blogList.style.display = 'none';
-        blogDetail.style.display = 'block';
-        window.scrollTo(0, 0);
-      }
-
-      // Event Listeners
-      btnBack.addEventListener('click', () => {
-        renderList();
-      });
-
-      btnPrev.addEventListener('click', () => {
-        if (currentIndex > 0) {
-          showNote(currentIndex - 1);
-        }
-      });
-
-      btnNext.addEventListener('click', () => {
-        if (currentIndex < notes.length - 1) {
-          showNote(currentIndex + 1);
-        }
-      });
-
-      // Initial Render
-      renderList();
-    });
-  </script>
+    </script>
 </body>
 
 </html>
