@@ -119,8 +119,27 @@ a:hover {
     display: flex;
     flex-direction: column;
     background: var(--bg-color);
-    z-index: 10;
-    flex-shrink: 0;
+    z-index: 100;
+    /* Ensure it's above content */
+
+    /* Fixed positioning for overlay/fade effect */
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    transition: opacity 0.55s ease;
+    opacity: 1;
+}
+
+/* Faded state for sidebar */
+.sidebar.faded {
+    opacity: 0;
+    /* We keep pointer-events: auto so hover still works to reveal it */
+}
+
+.sidebar.faded:hover {
+    opacity: 1;
 }
 
 .sidebar-header {
@@ -179,7 +198,10 @@ a:hover {
 
 /* Main Content Area */
 .main-content {
-    flex: 1;
+    /* Removed flex: 1 since sidebar is fixed */
+    width: 100%;
+    height: 100vh;
+    /* Full height */
     overflow-y: auto;
     position: relative;
     display: flex;
@@ -192,6 +214,7 @@ a:hover {
     max-width: var(--max-content-width);
     padding: var(--space-lg) var(--space-md);
     margin: 0 auto;
+    /* Center horizontally */
 }
 
 /* Note Content */

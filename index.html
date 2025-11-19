@@ -409,6 +409,10 @@
                         sidebar.classList.remove('hidden');
                         mainContent.classList.remove('visible');
                     }
+                    
+                    // Desktop: Make sidebar permanently visible
+                    sidebar.classList.remove('faded');
+
                     // Deselect all
                     document.querySelectorAll('.article-link').forEach(el => el.classList.remove('active'));
                     currentIndex = -1;
@@ -419,6 +423,12 @@
                 const noteIndex = notes.findIndex(n => n.slug === hash);
                 if (noteIndex !== -1) {
                     showNote(noteIndex);
+                    
+                    // Desktop: Fade sidebar when article is selected
+                    // Only if not on mobile (mobile handles it via 'hidden' class)
+                    if (window.innerWidth > 768) {
+                        sidebar.classList.add('faded');
+                    }
                 }
             }
 
