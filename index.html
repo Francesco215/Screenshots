@@ -43,7 +43,6 @@
         <aside id="sidebar" class="sidebar">
             <div class="sidebar-header" style="display: flex; justify-content: space-between; align-items: center;">
                 <div class="site-title">Screenshot blog</div>
-                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">Dark</button>
             </div>
             <nav class="sidebar-content">
                 <ul id="blog-list" class="article-list">
@@ -231,33 +230,9 @@
             const sidebar = document.getElementById('sidebar');
             const mainContent = document.getElementById('main-content');
             const noteContentDisplay = document.getElementById('note-content-display');
-            const themeToggle = document.getElementById('theme-toggle');
 
             let notes = [];
             let currentIndex = -1;
-
-            // Dark Mode Logic
-            function initTheme() {
-                const savedTheme = localStorage.getItem('theme');
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-                if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-                    document.body.classList.add('dark-mode');
-                    themeToggle.textContent = 'Light';
-                } else {
-                    document.body.classList.remove('dark-mode');
-                    themeToggle.textContent = 'Dark';
-                }
-            }
-
-            themeToggle.addEventListener('click', () => {
-                document.body.classList.toggle('dark-mode');
-                const isDark = document.body.classList.contains('dark-mode');
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-                themeToggle.textContent = isDark ? 'Light' : 'Dark';
-            });
-
-            initTheme();
 
             // Parse notes
             notesData.forEach((note, index) => {
