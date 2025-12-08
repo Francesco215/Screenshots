@@ -257,6 +257,40 @@ a:hover {
     margin-bottom: 0;
 }
 
+.note-content ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: var(--space-md);
+    margin-top: calc(var(--space-md) * -0.5);
+}
+
+/* Adjust margin if ul follows a p immediately to match flow */
+.note-content p+ul {
+    margin-top: calc(var(--space-md) * -0.5);
+}
+
+.note-content li {
+    position: relative;
+    padding-left: 1.5em;
+    /* Space for dash and gap */
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: var(--space-xs);
+    color: var(--text-primary);
+}
+
+.note-content li::before {
+    content: "-";
+    position: absolute;
+    left: 0;
+    line-height: 1.6;
+    /* Match li line-height */
+}
+
+.note-content li:last-child {
+    margin-bottom: 0;
+}
+
 /* Hidden Data */
 .hidden-notes {
     display: none;
